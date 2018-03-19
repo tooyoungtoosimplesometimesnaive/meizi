@@ -2,7 +2,7 @@
 #include  "cell.h"
 
 
-void cell::link(cell c, bool bidirectionally = true)
+void Cell::link(Cell& c, bool bidirectionally = true)
 {
 	links.insert(c);
 	if (bidirectionally)
@@ -12,7 +12,7 @@ void cell::link(cell c, bool bidirectionally = true)
 }
 
 
-void cell::unlink(cell c, bool bidirectionally = true)
+void Cell::unlink(Cell& c, bool bidirectionally = true)
 {
 	links.erase(c);
 	if (bidirectionally)
@@ -23,13 +23,13 @@ void cell::unlink(cell c, bool bidirectionally = true)
 
 
 // linked?
-bool is_linked(cell c)
+bool is_linked(Cell& c)
 {
 	return links.find(c) != links.end();
 }
 
 // get the neighbors
-std::vector<cell> neighbors()
+std::vector<Cell> neighbors()
 {
 	std::vector<cell> v({});
 	if (north)
