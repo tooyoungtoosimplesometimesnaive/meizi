@@ -9,7 +9,7 @@ std::ostream & operator<<(std::ostream &os, const Grid& g)
 	os << "+";
 	for (int i = 0; i < g.columns; i++)
 		os << "---+";
-	os << "+" << std::endl;
+	os << std::endl;
 
 	for (auto itr = g.grid.begin(); itr != g.grid.end(); itr ++)
 	{
