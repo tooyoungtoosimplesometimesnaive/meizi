@@ -2,19 +2,21 @@
 #define GRID_H
 
 #include <vector>
+#include <ostream>
 #include "cell.h"
 
 class Grid {
 public:
+	friend std::ostream & operator<<(std::ostream &os, const Grid& g);
 	Grid(int r, int c) : rows(r), columns(c)
 	{
 		grid = prepare_grid();
 		configure_cells();
 	}
 
-	Cell& at(int row, int column);
+	Cell* at(int row, int column);
 
-	Cell random_cell();
+	Cell* random_cell();
 
 	int size() { return rows * columns; }
 

@@ -33,7 +33,7 @@ void Cell::unlink(Cell* c, bool bidirectionally)
 
 
 // linked?
-bool Cell::is_linked(Cell* c)
+bool Cell::is_linked(const Cell* c) const
 {
 	auto it = std::find(links.begin(), links.end(), c);
 	return it != links.end();

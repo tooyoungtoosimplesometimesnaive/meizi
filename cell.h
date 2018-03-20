@@ -13,7 +13,7 @@ public:
 	void unlink(Cell* c, bool bidirectionally = true);
 
 	// linked?
-	bool is_linked(Cell* c);
+	bool is_linked(const Cell* c) const;
 	
 	// get the neighbors
 	std::vector<Cell*> neighbors();

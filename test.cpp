@@ -12,5 +12,6 @@ int main()
 	Grid g(4, 4);
 	b.on(g);
 
+	cout << g << endl;
 	return 0;
 }
