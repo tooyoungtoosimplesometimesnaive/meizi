@@ -2,6 +2,7 @@
 #include "grid.h"
 #include "cell.h"
 #include <vector>
+#include <random>
 
 class binary_tree {
 public:
@@ -20,7 +21,10 @@ public:
 				if (n.size() == 0)
 					continue;
 
-				int index = rand() % (n.size());
+				std::random_device rd;
+				std::mt19937 gen(rd());
+				std::uniform_int_distribution<int> dist(0, n.size() - 1);
+				int index = dist(gen);
 				if (n[index] != nullptr)
 					itc->link(n[index]);
 			}
