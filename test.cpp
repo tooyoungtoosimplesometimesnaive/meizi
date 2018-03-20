@@ -3,6 +3,7 @@
 #include "grid.h"
 #include "cell.h"
 #include "binary_tree.h"
+#include "sidewinder.h"
 
 using namespace std;
 
@@ -13,5 +14,13 @@ int main()
 	b.on(g);
 
 	cout << g << endl;
+
+	cout << endl;
+
+	Grid g2(4, 4);
+	sidewinder s;
+	s.on(g2);
+
+	cout << g2 << endl;
 	return 0;
 }
