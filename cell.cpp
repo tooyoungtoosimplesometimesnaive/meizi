@@ -1,37 +1,48 @@
+#include <algorithm>
 #include <vector>
 #include  "cell.h"
 
 
-void Cell::link(Cell& c, bool bidirectionally = true)
+bool operator==(Cell& lhs, Cell& rhs)
 {
-	links.insert(c);
+	return lhs.row == rhs.row && lhs.column && rhs.column;
+}
+
+void Cell::link(Cell* c, bool bidirectionally)
+{
+	if (std::find(links.begin(), links.end(), c) == links.end())
+		links.push_back(c);
+
 	if (bidirectionally)
 	{
-		c.link(this, false);
+		c->link(this, false);
 	}
 }
 
 
-void Cell::unlink(Cell& c, bool bidirectionally = true)
+void Cell::unlink(Cell* c, bool bidirectionally)
 {
-	links.erase(c);
+	auto it = std::find(links.begin(), links.end(), c);
+	links.erase(it);
+
 	if (bidirectionally)
 	{
-		c.unlink(this, false);
+		c->unlink(this, false);
 	}
 }
 
 
 // linked?
-bool is_linked(Cell& c)
+bool Cell::is_linked(Cell* c)
 {
-	return links.find(c) != links.end();
+	auto it = std::find(links.begin(), links.end(), c);
+	return it != links.end();
 }
 
 // get the neighbors
-std::vector<Cell> neighbors()
+std::vector<Cell*> Cell::neighbors()
 {
-	std::vector<cell> v({});
+	std::vector<Cell*> v({});
 	if (north)
 		v.push_back(north);
 	if (south)

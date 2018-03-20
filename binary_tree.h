@@ -7,24 +7,22 @@ class binary_tree {
 public:
 	void on(Grid& g)
 	{
-		for (auto itr = g.grid.cbegin(); itr != g.grid.cend(); itr ++)
+		for (auto itr = g.grid.begin(); itr != g.grid.end(); itr ++)
 		{
-			for (auto itc = itr->cbegin(); itc != itr->cend(); itc ++)
+			for (auto itc = itr->begin(); itc != itr->end(); itc ++)
 			{
-				std::vector<Cell> n ({});
+				std::vector<Cell*> n ({});
 				if (itc->north)
 					n.push_back(*itc);
 				if (itc->east)
 					n.push_back(*itc);
 
 				int index = rand() % (n.size());
-				Cell neighbor = n[index];
-				if (neighbor)
+				Cell* neighbor = n[index];
+				if (neighbor != nullptr)
 					itc->link(neighbor);
 			}
 		}
-		return g;
 	}
-}
-				
+};
 
