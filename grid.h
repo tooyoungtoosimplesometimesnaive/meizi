@@ -19,6 +19,7 @@ public:
 	Cell* random_cell();
 
 	int size() { return rows * columns; }
+	void to_img(int cell_size = 10);
 
 	int rows;
 	int columns;

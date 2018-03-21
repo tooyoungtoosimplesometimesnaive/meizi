@@ -22,5 +22,7 @@ int main()
 	s.on(g2);
 
 	cout << g2 << endl;
+	g2.to_img();
+
 	return 0;
 }

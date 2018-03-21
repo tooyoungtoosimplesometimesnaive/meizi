@@ -1,8 +1,14 @@
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+
 #include <vector>
 #include <ostream>
 #include <string>
 #include "grid.h"
 
+using namespace cv;
 
 std::ostream & operator<<(std::ostream &os, const Grid& g)
 {
@@ -82,3 +88,35 @@ Cell* Grid::random_cell()
 	return at(r, c);
 }
 
+
+
+void Grid::to_img(int cell_size)
+{
+	int img_width = cell_size * columns;
+	int img_height = cell_size * rows;
+	Scalar wall(255, 0, 0);
+
+	Mat Im = Mat::ones(img_width, img_height, CV_8UC3);
+
+	for (auto itr = grid.begin(); itr != grid.end(); itr++)
+	{
+		for (auto itc = itr->begin(); itc != itr->end(); itc++)
+		{
+			int x1 = itc->column * cell_size;
+			int y1 = itc->row * cell_size;
+			int x2 = (itc->column + 1) * cell_size;
+			int y2 = (itc->row + 1) * cell_size;
+
+			if (itc->north == nullptr)
+				line(Im, Point(x1, y1), Point(x2, y1), wall);
+			if (itc->west == nullptr)
+				line(Im, Point(x1, y1), Point(x1, y2), wall);
+			if (!itc->is_linked(itc->east))
+				line(Im, Point(x2, y1), Point(x2, y2), wall);
+			if (!itc->is_linked(itc->south))
+				line(Im, Point(x1, y2), Point(x2, y2), wall);
+		}
+	}
+	
+	imwrite("maze.png", Im);
+}
