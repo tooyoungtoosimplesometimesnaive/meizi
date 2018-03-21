@@ -17,12 +17,12 @@ int main()
 
 	cout << endl;
 
-	Grid g2(4, 4);
+	Grid g2(8, 8);
 	sidewinder s;
 	s.on(g2);
 
 	cout << g2 << endl;
-	g2.to_img();
+	g2.to_img(40);
 
 	return 0;
 }

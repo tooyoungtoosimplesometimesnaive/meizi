@@ -8,8 +8,6 @@
 #include <string>
 #include "grid.h"
 
-using namespace cv;
-
 std::ostream & operator<<(std::ostream &os, const Grid& g)
 {
 	os << "+";
@@ -94,9 +92,10 @@ void Grid::to_img(int cell_size)
 {
 	int img_width = cell_size * columns;
 	int img_height = cell_size * rows;
-	Scalar wall(255, 0, 0);
+	cv::Scalar wall(255, 0, 0);
+	cv::Scalar background(255, 255, 255);
 
-	Mat Im = Mat::ones(img_width, img_height, CV_8UC3);
+	cv::Mat Im = cv::Mat(img_width + 1, img_height + 1, CV_8UC3, background);
 
 	for (auto itr = grid.begin(); itr != grid.end(); itr++)
 	{
@@ -108,15 +107,15 @@ void Grid::to_img(int cell_size)
 			int y2 = (itc->row + 1) * cell_size;
 
 			if (itc->north == nullptr)
-				line(Im, Point(x1, y1), Point(x2, y1), wall);
+				cv::line(Im, cv::Point(x1, y1), cv::Point(x2, y1), wall);
 			if (itc->west == nullptr)
-				line(Im, Point(x1, y1), Point(x1, y2), wall);
+				cv::line(Im, cv::Point(x1, y1), cv::Point(x1, y2), wall);
 			if (!itc->is_linked(itc->east))
-				line(Im, Point(x2, y1), Point(x2, y2), wall);
+				cv::line(Im, cv::Point(x2, y1), cv::Point(x2, y2), wall);
 			if (!itc->is_linked(itc->south))
-				line(Im, Point(x1, y2), Point(x2, y2), wall);
+				cv::line(Im, cv::Point(x1, y2), cv::Point(x2, y2), wall);
 		}
 	}
 	
-	imwrite("maze.png", Im);
+	cv::imwrite("maze.png", Im);
 }
