@@ -3,11 +3,6 @@
 #include  "cell.h"
 
 
-bool operator==(Cell& lhs, Cell& rhs)
-{
-	return lhs.row == rhs.row && lhs.column && rhs.column;
-}
-
 void Cell::link(Cell* c, bool bidirectionally)
 {
 	if (std::find(links.begin(), links.end(), c) == links.end())
