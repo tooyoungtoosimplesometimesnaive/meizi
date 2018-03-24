@@ -87,6 +87,10 @@ Cell* Grid::random_cell()
 }
 
 
+std::string Grid::contents_of(Cell *cell)
+{
+	return " ";
+}
 
 void Grid::to_img(int cell_size)
 {

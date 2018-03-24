@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <ostream>
+#include <string>
 #include "cell.h"
 
 class Grid {
@@ -20,6 +21,7 @@ public:
 
 	int size() { return rows * columns; }
 	void to_img(int cell_size = 10);
+	std::string contents_of(Cell *cell);
 
 	int rows;
 	int columns;
