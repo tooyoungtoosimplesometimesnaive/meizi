@@ -2,10 +2,12 @@
 #define CELL_H
 
 #include <vector>
+// #include "distances.h"
+class Distances;
 
 class Cell {
 public:
-	friend bool operator==(Cell& lhs, Cell& rhs);
+	friend bool operator==(const Cell& lhs, const Cell& rhs);
 	Cell(int r, int c) : row(r), column(c), links({}),
 		north(nullptr), west(nullptr), south(nullptr), east(nullptr) {}
 
@@ -17,6 +19,8 @@ public:
 	
 	// get the neighbors
 	std::vector<Cell*> neighbors();
+
+	Distances distances();
 
 	int row;
 	int column;
