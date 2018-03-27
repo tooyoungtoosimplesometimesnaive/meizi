@@ -2,6 +2,7 @@
 #define DISTANCES_H
 
 #include <unordered_map>
+#include <utility>
 #include "Cell_hash.h"
 #include "cell.h"
 
@@ -13,6 +14,7 @@ public:
 		cells[c] = 0;
 	}
 	Distances path_to(Cell goal);
+	std::pair<Cell, int> max_distance();
 
 	Cell root;
 	// need to have a map of cells and distances.
