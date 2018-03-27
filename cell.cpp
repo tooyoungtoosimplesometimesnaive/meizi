@@ -57,6 +57,23 @@ std::vector<Cell*> Cell::neighbors()
 Distances Cell::distances()
 {
 	Distances distances(*this);
+	std::vector<Cell*> frontier = { this };
+	while (frontier.size() != 0)
+	{
+		std::vector<Cell*> new_frontier = {};
+		for (auto it = frontier.begin(); it != frontier.end(); it ++)
+		{
+			for (auto itl = (**it).links.begin(); itl != (**it).links.end(); itl++)
+			{
+				if (distances.cells.find(**itl) == distances.cells.end())
+				{
+					distances.cells[**itl] = distances.cells[**it] + 1;
+					new_frontier.push_back(*itl);
+				}
+			}
+		}
+		frontier = new_frontier;
+	}
 	return distances;
 }
 

@@ -8,7 +8,12 @@
 #include <string>
 #include "grid.h"
 
-std::ostream & operator<<(std::ostream &os, const Grid& g)
+std::string Grid::contents_of(Cell cell)
+{
+	return " ";
+}
+
+std::ostream & operator<<(std::ostream &os, Grid& g)
 {
 	os << "+";
 	for (int i = 0; i < g.columns; i++)
@@ -21,7 +26,7 @@ std::ostream & operator<<(std::ostream &os, const Grid& g)
 		std::string bottom = "+";
 		for (auto itc = itr->begin(); itc != itr->end(); itc ++)
 		{
-			std::string body = "   ";
+			std::string body = " " + g.contents_of(*itc) + " ";
 			std::string east_boundary = itc->is_linked(itc->east) ? " " : "|";
 			top += (body + east_boundary);
 			std::string south_boundary = itc->is_linked(itc->south) ? "   " : "---";
@@ -87,10 +92,6 @@ Cell* Grid::random_cell()
 }
 
 
-std::string Grid::contents_of(Cell *cell)
-{
-	return " ";
-}
 
 void Grid::to_img(int cell_size)
 {

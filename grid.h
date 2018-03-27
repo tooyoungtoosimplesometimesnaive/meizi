@@ -8,7 +8,7 @@
 
 class Grid {
 public:
-	friend std::ostream & operator<<(std::ostream &os, const Grid& g);
+	friend std::ostream & operator<<(std::ostream &os, Grid& g);
 	Grid(int r, int c) : rows(r), columns(c)
 	{
 		grid = prepare_grid();
@@ -21,12 +21,12 @@ public:
 
 	int size() { return rows * columns; }
 	void to_img(int cell_size = 10);
-	std::string contents_of(Cell *cell);
+	virtual std::string contents_of(Cell cell);
 
 	int rows;
 	int columns;
 	std::vector<std::vector<Cell>> grid;
-private:
+protected:
 	std::vector<std::vector<Cell>> prepare_grid();
 	void configure_cells();
 };
