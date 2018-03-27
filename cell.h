@@ -8,6 +8,9 @@ class Distances;
 class Cell {
 public:
 	friend bool operator==(const Cell& lhs, const Cell& rhs);
+	friend bool operator!=(const Cell& lhs, const Cell& rhs);
+
+	Cell(){}
 	Cell(int r, int c) : row(r), column(c), links({}),
 		north(nullptr), west(nullptr), south(nullptr), east(nullptr) {}
 

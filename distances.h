@@ -7,10 +7,12 @@
 
 class Distances {
 public:
+	Distances() {}
 	Distances(Cell& c): root(c)
 	{
 		cells[c] = 0;
 	}
+	Distances path_to(Cell goal);
 
 	Cell root;
 	// need to have a map of cells and distances.

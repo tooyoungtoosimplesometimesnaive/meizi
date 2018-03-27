@@ -7,6 +7,10 @@ bool operator==(const Cell& lhs, const Cell& rhs)
 {
 	return lhs.row == rhs.row && lhs.column == rhs.column;
 }
+bool operator!=(const Cell& lhs, const Cell& rhs)
+{
+	return lhs.row != rhs.row || lhs.column != rhs.column;
+}
 void Cell::link(Cell* c, bool bidirectionally)
 {
 	if (std::find(links.begin(), links.end(), c) == links.end())

@@ -32,7 +32,8 @@ std::string transform_int(int i)
 class Distance_grid: public Grid
 {
 public:
-	Distance_grid(int r, int c, int start_r, int start_c) : Grid(r, c), distances(grid[start_r][start_c]) {
+	Distance_grid(int r, int c) : Grid(r, c)
+	{
 	}
 	std::string contents_of(Cell cell)
 	{
