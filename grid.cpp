@@ -6,6 +6,7 @@
 #include <vector>
 #include <ostream>
 #include <string>
+#include <random>
 #include "grid.h"
 
 cv::Scalar Grid::background_color_for(Cell cell)
@@ -91,9 +92,10 @@ Cell* Grid::at(int row, int column)
 
 Cell* Grid::random_cell()
 {
-	int r = rand() % rows;
-	int c = rand() % columns;
-	return at(r, c);
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist_r(0, rows - 1), dist_c(0, columns - 1);
+	return at(dist_r(gen), dist_c(gen));
 }
 
 
