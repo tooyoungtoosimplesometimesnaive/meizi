@@ -1,6 +1,7 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <opencv2/core.hpp>
 #include <vector>
 #include <ostream>
 #include <string>
@@ -20,8 +21,9 @@ public:
 	Cell* random_cell();
 
 	int size() { return rows * columns; }
-	void to_img(int cell_size = 10);
+	void to_img(int cell_size = 10, std::string file_name = "maze.png");
 	virtual std::string contents_of(Cell cell);
+	virtual cv::Scalar background_color_for(Cell cell);
 
 	int rows;
 	int columns;

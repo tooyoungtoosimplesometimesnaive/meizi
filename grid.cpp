@@ -8,6 +8,11 @@
 #include <string>
 #include "grid.h"
 
+cv::Scalar Grid::background_color_for(Cell cell)
+{
+	return cv::Scalar(255, 255, 255);
+}
+
 std::string Grid::contents_of(Cell cell)
 {
 	return " ";
@@ -92,8 +97,7 @@ Cell* Grid::random_cell()
 }
 
 
-
-void Grid::to_img(int cell_size)
+void Grid::to_img(int cell_size, std::string file_name)
 {
 	int img_width = cell_size * columns;
 	int img_height = cell_size * rows;
@@ -102,6 +106,10 @@ void Grid::to_img(int cell_size)
 
 	cv::Mat Im = cv::Mat(img_width + 1, img_height + 1, CV_8UC3, background);
 
+	// 1 -> background
+	// 2 -> walls
+	int mode[] = {1, 2};
+	for (auto m : mode) {
 	for (auto itr = grid.begin(); itr != grid.end(); itr++)
 	{
 		for (auto itc = itr->begin(); itc != itr->end(); itc++)
@@ -111,6 +119,11 @@ void Grid::to_img(int cell_size)
 			int x2 = (itc->column + 1) * cell_size;
 			int y2 = (itc->row + 1) * cell_size;
 
+			if (m == 1)
+			{
+				cv::Scalar bg_color = background_color_for(*itc);
+				cv::rectangle(Im, cv::Point(x1, y1), cv::Point(x2, y2), bg_color, -1);
+			} else {
 			if (itc->north == nullptr)
 				cv::line(Im, cv::Point(x1, y1), cv::Point(x2, y1), wall);
 			if (itc->west == nullptr)
@@ -119,8 +132,10 @@ void Grid::to_img(int cell_size)
 				cv::line(Im, cv::Point(x2, y1), cv::Point(x2, y2), wall);
 			if (!itc->is_linked(itc->south))
 				cv::line(Im, cv::Point(x1, y2), cv::Point(x2, y2), wall);
+			}
 		}
 	}
+	}
 	
-	cv::imwrite("maze.png", Im);
+	cv::imwrite(file_name, Im);
 }
