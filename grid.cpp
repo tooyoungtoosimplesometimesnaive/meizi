@@ -103,7 +103,7 @@ void Grid::to_img(int cell_size, std::string file_name)
 {
 	int img_width = cell_size * columns;
 	int img_height = cell_size * rows;
-	cv::Scalar wall(255, 0, 0);
+	cv::Scalar wall(0, 0, 0);
 	cv::Scalar background(255, 255, 255);
 
 	cv::Mat Im = cv::Mat(img_width + 1, img_height + 1, CV_8UC3, background);

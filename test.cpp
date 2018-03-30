@@ -5,6 +5,7 @@
 #include "binary_tree.h"
 #include "sidewinder.h"
 #include "aldous_broder.h"
+#include "wilsons.h"
 
 using namespace std;
 
@@ -30,5 +31,11 @@ int main()
 	ab.on(g3);
 
 	cout << g3 << endl;
+
+	Grid g4(8, 8);
+	wilsons w;
+	w.on(g4);
+
+	cout << g4 << endl;
 	return 0;
 }
