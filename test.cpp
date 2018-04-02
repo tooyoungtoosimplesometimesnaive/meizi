@@ -6,6 +6,7 @@
 #include "sidewinder.h"
 #include "aldous_broder.h"
 #include "wilsons.h"
+#include "hunt_and_kill.h"
 
 using namespace std;
 
@@ -37,5 +38,11 @@ int main()
 	w.on(g4);
 
 	cout << g4 << endl;
+
+	Grid g5(8, 8);
+	hunt_and_kill hk;
+	hk.on(g5);
+
+	cout << g5 << endl;
 	return 0;
 }
