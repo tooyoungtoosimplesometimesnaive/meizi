@@ -23,6 +23,8 @@ int main()
 {
 	std::uniform_int_distribution<int> dist(1, 10);
 	do_dist(dist, 1, 10);
+	std::cout << "------" << std::endl;
+	do_dist(dist, 1, 5);
 
 	return 0;
 }
