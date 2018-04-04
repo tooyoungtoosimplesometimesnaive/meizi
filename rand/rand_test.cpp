@@ -5,10 +5,10 @@
 std::random_device rd;
 std::mt19937 gen(rd());
 
-template <typename D>
-void do_dist(D dist, int s, int e)
+void do_dist(int s, int e)
 {
-	std::vector<int> v (e - s + 2, 0);
+	std::uniform_int_distribution<int> dist(s, e);
+	std::vector<int> v (e + 1, 0);
 	for (int i = 0; i < 100000; i++)
 	{
 		v[dist(gen)] ++;
@@ -21,10 +21,11 @@ void do_dist(D dist, int s, int e)
 
 int main()
 {
-	std::uniform_int_distribution<int> dist(1, 10);
-	do_dist(dist, 1, 10);
+	do_dist(1, 10);
 	std::cout << "------" << std::endl;
-	do_dist(dist, 1, 5);
+	do_dist(1, 5);
+	std::cout << "------" << std::endl;
+	do_dist(5, 15);
 
 	return 0;
 }
