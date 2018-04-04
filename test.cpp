@@ -7,6 +7,7 @@
 #include "aldous_broder.h"
 #include "wilsons.h"
 #include "hunt_and_kill.h"
+#include "recursive_back_tracker.h"
 
 using namespace std;
 
@@ -49,5 +50,12 @@ int main()
 
 	cout << g5 << endl;
 	cout << g5.deadends().size() << " deadends." << endl;
+
+	Grid g6(8, 8);
+	recursive_back_tracker rbt;
+	rbt.on(g6);
+
+	cout << g6 << endl;
+	cout << g6.deadends().size() << " deadends." << endl;
 	return 0;
 }
