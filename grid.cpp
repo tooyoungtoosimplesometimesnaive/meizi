@@ -99,6 +99,22 @@ Cell* Grid::random_cell()
 }
 
 
+std::vector<Cell *> Grid::deadends()
+{
+	std::vector<Cell *> l({});
+	for (auto itr = grid.begin(); itr != grid.end(); itr++)
+	{
+		for (auto itc = itr->begin(); itc != itr->end(); itc++)
+		{
+			if (itc->links.size() == 1)
+			{
+				l.push_back(&(*itc));
+			}
+		}
+	}
+	return l;
+}
+
 void Grid::to_img(int cell_size, std::string file_name)
 {
 	int img_width = cell_size * columns;

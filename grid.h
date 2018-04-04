@@ -22,6 +22,7 @@ public:
 
 	int size() { return rows * columns; }
 	void to_img(int cell_size = 10, std::string file_name = "maze.png");
+	std::vector<Cell *> deadends();
 	virtual std::string contents_of(Cell cell);
 	virtual cv::Scalar background_color_for(Cell cell);
 

@@ -17,6 +17,7 @@ int main()
 	b.on(g);
 
 	cout << g << endl;
+	cout << g.deadends().size() << " deadends." << endl;
 
 	cout << endl;
 
@@ -25,6 +26,7 @@ int main()
 	s.on(g2);
 
 	cout << g2 << endl;
+	cout << g2.deadends().size() << " deadends." << endl;
 	// g2.to_img(40);
 
 	Grid g3(8, 8);
@@ -32,17 +34,20 @@ int main()
 	ab.on(g3);
 
 	cout << g3 << endl;
+	cout << g3.deadends().size() << " deadends." << endl;
 
 	Grid g4(8, 8);
 	wilsons w;
 	w.on(g4);
 
 	cout << g4 << endl;
+	cout << g4.deadends().size() << " deadends." << endl;
 
 	Grid g5(8, 8);
 	hunt_and_kill hk;
 	hk.on(g5);
 
 	cout << g5 << endl;
+	cout << g5.deadends().size() << " deadends." << endl;
 	return 0;
 }
