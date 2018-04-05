@@ -1,8 +1,10 @@
+#ifndef WILSONS_H
+#define WILSONS_H
 
 #include "grid.h"
 #include "cell.h"
+#include "rand.h"
 #include <vector>
-#include <random>
 #include <algorithm>
 
 class wilsons {
@@ -18,23 +20,18 @@ public:
 			}
 		}
 
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::uniform_int_distribution<int> dist(0, unvisited.size() - 1);
-		int first_index = dist(gen);
+		int first_index = random(0, unvisited.size() - 1);
 		// Cell* first = unvisited[first_index];
 		unvisited.erase(unvisited.begin() + first_index);
 
 		while (!unvisited.empty())
 		{
-			std::uniform_int_distribution<int> sample_dist(0, unvisited.size() - 1);
-			Cell* cell = unvisited[sample_dist(gen)];
+			Cell* cell = unvisited[random(0, unvisited.size() - 1)];
 			std::vector<Cell*> cell_path = { cell };
 
 			while (std::find(unvisited.begin(), unvisited.end(), cell) != unvisited.end())
 			{
-				std::uniform_int_distribution<int> sample_neighbors(0, cell->neighbors().size() - 1);
-				cell = cell->neighbors()[sample_neighbors(gen)];
+				cell = cell->neighbors()[random(0, cell->neighbors().size() - 1)];
 
 				auto pos = std::find(cell_path.begin(), cell_path.end(), cell);
 				if (pos != cell_path.end())
@@ -58,4 +55,4 @@ public:
 		}
 	}
 };
-
+#endif

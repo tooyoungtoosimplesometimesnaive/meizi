@@ -1,17 +1,11 @@
 #ifndef HUNT_AND_KILL_H
 #define HUNT_AND_KILL_H
+
 #include "grid.h"
 #include "cell.h"
+#include "rand.h"
 #include <vector>
 
-int uniform_dist(int start, int end)// all inclusive
-{
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dist(start, end);
-	return dist(gen);
-}
-	
 class hunt_and_kill {
 public:
 	void on(Grid& g)
@@ -32,7 +26,7 @@ public:
 
 			if (!unvisited_neighbors.empty())
 			{
-				int r = uniform_dist(0, unvisited_neighbors.size() - 1);
+				int r = random(0, unvisited_neighbors.size() - 1);
 				auto neighbor = unvisited_neighbors[r];
 				current->link(neighbor);
 				current = neighbor;
@@ -55,7 +49,7 @@ public:
 						{
 							current = &(*itc);
 							// select a random neighbor
-							int r = uniform_dist(0, visited_neighbors.size() - 1);
+							int r = random(0, visited_neighbors.size() - 1);
 							auto neighbor = visited_neighbors[r];
 							current->link(neighbor);
 

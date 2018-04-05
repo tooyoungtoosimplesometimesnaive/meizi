@@ -1,8 +1,10 @@
+#ifndef BINARY_TREE_H
+#define BINARY_TREE_H
 
 #include "grid.h"
 #include "cell.h"
+#include "rand.h"
 #include <vector>
-#include <random>
 
 class binary_tree {
 public:
@@ -21,14 +23,11 @@ public:
 				if (n.size() == 0)
 					continue;
 
-				std::random_device rd;
-				std::mt19937 gen(rd());
-				std::uniform_int_distribution<int> dist(0, n.size() - 1);
-				int index = dist(gen);
+				int index = random(0, n.size() - 1);
 				if (n[index] != nullptr)
 					itc->link(n[index]);
 			}
 		}
 	}
 };
-
+#endif

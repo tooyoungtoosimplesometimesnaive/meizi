@@ -1,8 +1,10 @@
+#ifndef SIDEWINDER_H
+#define SIDEWINDER_H
 
 #include "grid.h"
 #include "cell.h"
+#include "rand.h"
 #include <vector>
-#include <random>
 
 class sidewinder {
 public:
@@ -17,15 +19,11 @@ public:
 				bool at_eastern_boundary = itc->east == nullptr;
 				bool at_northern_boundary = itc->north == nullptr;
 
-				std::random_device rd;
-				std::mt19937 gen(rd());
-				std::uniform_int_distribution<int> dist(0, 1);
 				bool should_close_out = at_eastern_boundary ||
-					(!at_northern_boundary && dist(gen) == 0);
+					(!at_northern_boundary && random(0, 1) == 0);
 
 				if (should_close_out) {
-					std::uniform_int_distribution<int> member_dist(0, run.size() - 1);
-					Cell* member = run[member_dist(gen)];
+					Cell* member = run[random(0, run.size() - 1)];
 					if (member->north)
 						member->link(member->north);
 					run.clear();
@@ -37,4 +35,4 @@ public:
 		}
 	}
 };
-
+#endif

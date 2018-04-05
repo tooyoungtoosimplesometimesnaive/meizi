@@ -3,17 +3,10 @@
 
 #include "grid.h"
 #include "cell.h"
+#include "rand.h"
 #include <vector>
 #include <stack>
 
-int uniform_dist2(int start, int end)// all inclusive
-{
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dist(start, end);
-	return dist(gen);
-}
-	
 class recursive_back_tracker {
 public:
 	void on(Grid& g)
@@ -39,7 +32,7 @@ public:
 			{
 				s.pop();
 			} else {
-				int r = uniform_dist2(0, neighbors.size() - 1);
+				int r = random(0, neighbors.size() - 1);
 				auto neighbor = neighbors[r];
 				current->link(neighbor);
 				s.push(neighbor);
