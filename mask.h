@@ -2,6 +2,7 @@
 #define MASK_H
 
 #include <vector>
+#include <utility>
 
 class Mask
 {
@@ -13,6 +14,11 @@ public:
 			bits.push_back(r);
 		}
 	}
+
+	bool at(int row, int column);
+	int count();
+	std::pair<int, int> random_loaction();
+
 	int rows, columns;
 	std::vector<std::vector<bool>> bits;
 }
