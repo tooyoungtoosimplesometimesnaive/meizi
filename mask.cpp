@@ -13,6 +13,15 @@ bool Mask::at(int row, int column)
 	}
 }
 
+
+void Mask::put(int row, int column, bool value)
+{
+	if (row >= 0 && row < rows && column >=0 && column < columns)
+	{
+		bits[row][column] = value;
+	}
+}
+
 int Mask::count()
 {
 	int c = 0;
