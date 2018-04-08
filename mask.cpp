@@ -1,4 +1,5 @@
 #include "mask.h"
+#include "rand.h"
 #include <utility>
 
 bool Mask::at(int row, int column)
@@ -38,7 +39,7 @@ int Mask::count()
 	return c;
 }
 
-std::pair<int, int> Mask::random_loaction()
+std::pair<int, int> Mask::random_location()
 {
 	int r = 0, c = 0;
 	do {

@@ -1,7 +1,8 @@
 #include "masked_grid.h"
+#include "grid.h"
 
 
-std::vector<std::vector<Cell>> Maksed_grid::prepare_grid()
+std::vector<std::vector<Cell>> Masked_grid::prepare_grid()
 {
 	std::vector<std::vector<Cell>> v({});
 	for (int i = 0; i < rows; i++)

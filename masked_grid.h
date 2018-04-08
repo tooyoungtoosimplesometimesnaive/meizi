@@ -9,7 +9,7 @@
 class Masked_grid : public Grid
 {
 public:
-	Masked_grid(Mask m) {}
+	Masked_grid(Mask m) : Grid(m.rows, m.columns), mask(m) {}
 
 	// these are inherited from the base class.
 	std::vector<std::vector<Cell>> prepare_grid();
@@ -19,6 +19,6 @@ public:
 
 	Mask mask;
 
-}
+};
 
 #endif

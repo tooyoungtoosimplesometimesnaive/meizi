@@ -18,10 +18,10 @@ public:
 	bool at(int row, int column);
 	void put(int row, int column, bool value);
 	int count();
-	std::pair<int, int> random_loaction();
+	std::pair<int, int> random_location();
 
 	int rows, columns;
 	std::vector<std::vector<bool>> bits;
-}
+};
 
 #endif

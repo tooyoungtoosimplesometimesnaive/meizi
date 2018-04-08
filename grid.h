@@ -30,7 +30,7 @@ public:
 	int columns;
 	std::vector<std::vector<Cell>> grid;
 protected:
-	std::vector<std::vector<Cell>> prepare_grid();
+	virtual std::vector<std::vector<Cell>> prepare_grid();
 	void configure_cells();
 };
 
