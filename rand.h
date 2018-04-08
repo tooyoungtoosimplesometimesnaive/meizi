@@ -3,10 +3,10 @@
 
 #include <random>
 
-std::random_device rd;
-std::mt19937 gen(rd());
+static std::random_device rd;
+static std::mt19937 gen(rd());
 
-int random(int s, int e)
+static int random(int s, int e)
 {
 	std::uniform_int_distribution<int> dist(s, e);
 	return dist(gen);

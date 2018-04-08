@@ -7,13 +7,7 @@
 class Mask
 {
 public:
-	Mask(int r, int c) : rows(r), columns(c), bits({}) {
-		for (int i = 0; i < r; i++)
-		{
-			std::vector<bool> r(c, false);
-			bits.push_back(r);
-		}
-	}
+	Mask(int r, int c);
 
 	bool at(int row, int column);
 	void put(int row, int column, bool value);

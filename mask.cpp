@@ -2,6 +2,14 @@
 #include "rand.h"
 #include <utility>
 
+Mask::Mask(int r, int c) : rows(r), columns(c), bits({}) {
+	for (int i = 0; i < r; i++)
+	{
+		std::vector<bool> r(c, false);
+		bits.push_back(r);
+	}
+}
+
 bool Mask::at(int row, int column)
 {
 	if (row >= 0 && row < rows && column >=0 && column < columns)
