@@ -1,9 +1,11 @@
 #include "masked_grid.h"
 #include "grid.h"
+#include <iostream>
 
 
 std::vector<std::vector<Cell>> Masked_grid::prepare_grid()
 {
+	std::cout << "in here " << std::endl;
 	std::vector<std::vector<Cell>> v({});
 	for (int i = 0; i < rows; i++)
 	{
@@ -24,6 +26,7 @@ std::vector<std::vector<Cell>> Masked_grid::prepare_grid()
 
 Cell* Masked_grid::random_cell()
 {
+	std::cout << "here in random " << std::endl;
 	auto p = mask.random_location();
 	return at(p.first, p.second);
 }

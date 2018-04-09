@@ -18,7 +18,7 @@ public:
 
 	Cell* at(int row, int column);
 
-	Cell* random_cell();
+	virtual Cell* random_cell();
 
 	int size() { return rows * columns; }
 	void to_img(int cell_size = 10, std::string file_name = "maze.png");
