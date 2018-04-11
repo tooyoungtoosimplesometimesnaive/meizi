@@ -24,6 +24,7 @@ int main()
 	rb2.on(grid2);
 
 	cout << grid2 << endl;
+	grid2.to_img(40, "mask_test.png");
 
 	return 0;
 }
