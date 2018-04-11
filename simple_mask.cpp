@@ -17,5 +17,13 @@ int main()
 	rb.on(grid);
 
 	cout << grid << endl;
+
+	Mask mask2("mask.txt");
+	Masked_grid grid2(mask2);
+	recursive_back_tracker rb2;
+	rb2.on(grid2);
+
+	cout << grid2 << endl;
+
 	return 0;
 }
