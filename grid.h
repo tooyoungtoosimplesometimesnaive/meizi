@@ -29,8 +29,9 @@ public:
 	int rows;
 	int columns;
 	std::vector<std::vector<Cell>> grid;
+
 protected:
-	virtual std::vector<std::vector<Cell>> prepare_grid();
+	std::vector<std::vector<Cell>> prepare_grid();
 	void configure_cells();
 };
 

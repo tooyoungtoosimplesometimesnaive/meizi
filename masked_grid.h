@@ -9,13 +9,15 @@
 class Masked_grid : public Grid
 {
 public:
-	Masked_grid(Mask m) : Grid(m.rows, m.columns), mask(m) {}
+	Masked_grid(Mask m) : Grid(m.rows, m.columns), mask(m) {
+		drop_cells();
+	}
 
 	// these are inherited from the base class.
-	std::vector<std::vector<Cell>> prepare_grid();
+	void drop_cells();
 
 	int size();
-	Cell* random_cell();
+	Cell* random_cell() override;
 
 	Mask mask;
 

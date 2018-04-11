@@ -1,7 +1,6 @@
 #include "mask.h"
 #include "rand.h"
 #include <utility>
-#include <iostream>
 
 Mask::Mask(int r, int c) : rows(r), columns(c), bits({}) {
 	for (int i = 0; i < r; i++)
@@ -54,7 +53,6 @@ std::pair<int, int> Mask::random_location()
 	do {
 		r = random(0, rows - 1);
 		c = random(0, columns - 1);
-		std::cout << "the location: " << r << ", " << c << std::endl;
 	} while (!bits[r][c]);
 	return std::make_pair(r, c);
 }
