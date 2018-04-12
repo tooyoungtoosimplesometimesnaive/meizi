@@ -33,6 +33,7 @@ public:
 protected:
 	std::vector<std::vector<Cell>> prepare_grid();
 	void configure_cells();
+	bool isolated_cell(Cell* c);
 };
 
 #endif
