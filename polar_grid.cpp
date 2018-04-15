@@ -4,7 +4,15 @@
 #include <opencv2/highgui.hpp>
 
 #include "polar_grid.h"
+#include "polar_cell.h"
+
 #include <cmath>
+
+std::vector<std::vector<Polar_cell>> Polar_grid::prepare_grid()
+{
+	std::vector<std::vector<Polar_cell>> v({});
+	return v;
+}
 
 
 void Polar_grid::to_img(int cell_size, std::string file_name)
@@ -54,3 +62,5 @@ void Polar_grid::to_img(int cell_size, std::string file_name)
 	
 	cv::imwrite(file_name, Im);
 }
+
+
