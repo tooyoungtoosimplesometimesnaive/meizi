@@ -11,6 +11,7 @@ public:
 	
 	std::vector<Polar_cell*> neighbors();
 
-	Polar_cell * cw, ccw, inward;
+	Polar_cell * cw, * ccw, * inward;
+	std::vector<Polar_cell*> outward;
 };
 #endif

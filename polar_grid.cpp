@@ -5,15 +5,72 @@
 
 #include "polar_grid.h"
 #include "polar_cell.h"
+#include "rand.h"
 
+#include <vector>
 #include <cmath>
 
 std::vector<std::vector<Polar_cell>> Polar_grid::prepare_grid()
 {
 	std::vector<std::vector<Polar_cell>> v({});
+	double row_height = 1.0 / rows;
+
+	Polar_cell pc(0, 0);
+	std::vector<Polar_cell> r1({ pc });
+	v.push_back(r1);
+
+	for (int row = 1; row < rows; row++)
+	{
+		double radius = ((double) row) / rows;
+		double circumference = 2.0 * 3.1415926 * radius;
+
+		int previous_count = v[row - 1].size();
+		double estimated_cell_width = circumference / previous_count;
+
+		// Ratio: always be either 1 or 2;
+		int r = std::floor(estimated_cell_width / row_height);
+		int cells = previous_count * r;
+
+		std::vector<Polar_cell> this_row;
+		for (int c = 0; c < cells; c++)
+		{
+			Polar_cell p(row, c);
+			this_row.push_back(p);
+		}
+		v.push_back(this_row);
+	}
+
 	return v;
 }
 
+void Polar_grid::configure_cells()
+{
+	for (auto itr = grid.begin(); itr != grid.end(); itr++)
+	{
+		for (auto itc = itr->begin(); itc != itr->end(); itc++)
+		{
+			int r = itc->row;
+			int c = itc->column;
+			if (r > 0)
+			{
+				itc->cw = at(r, c + 1);
+				itc->ccw = at(r, c - 1);
+				int r = grid[r].size() / grid[r - 1] .size();
+				int parent = grid[r - 1][c / r];
+				parent->outward.push_back(&(*itc));
+				itc->inward = parent;
+			}
+		}
+	}
+}
+
+
+Polar_cell* Polar_grid::random_cell()
+{
+	int r = random(0, rows - 1);
+	int c = random(0, grid[r].size() - 1);
+	return at(r, c);
+}
 
 void Polar_grid::to_img(int cell_size, std::string file_name)
 {
@@ -51,10 +108,17 @@ void Polar_grid::to_img(int cell_size, std::string file_name)
 			int dx = center + (int)(outer_radius * std::cos(theta_cw));
 			int dy = center + (int)(outer_radius * std::sin(theta_cw));
 
+			/*
 			if (!itc->is_linked(itc->north))
 				cv::line(Im, cv::Point(ax, ay), cv::Point(cx, cy), wall);
 			if (!itc->is_linked(itc->east))
 				cv::line(Im, cv::Point(cx, cy), cv::Point(dx, dy), wall);
+				*/
+			if (!itc->is_linked(itc->inward))
+				cv::line(Im, cv::Point(ax, ay), cv::Point(cx, cy), wall);
+			if (!itc->is_linked(itc->cw))
+				cv::line(Im, cv::Point(cx, cy), cv::Point(dx, dy), wall);
+
 		}
 	}
 
