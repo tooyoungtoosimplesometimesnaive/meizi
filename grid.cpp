@@ -9,22 +9,33 @@
 #include <random>
 #include "grid.h"
 
-cv::Scalar Grid::background_color_for(Cell cell)
+template<typename Cell_Type>
+Grid_base<Cell_Type>::Grid_base(int r, int c) : rows(r), columns(c)
+{
+	grid = prepare_grid();
+	configure_cells();
+}
+
+template<typename Cell_Type>
+cv::Scalar Grid_base<Cell_Type>::background_color_for(Cell_Type cell)
 {
 	return cv::Scalar(255, 255, 255);
 }
 
-std::string Grid::contents_of(Cell cell)
+template<typename Cell_Type>
+std::string Grid_base<Cell_Type>::contents_of(Cell_Type cell)
 {
 	return " ";
 }
 
-bool Grid::isolated_cell(Cell* c)
+template<typename Cell_Type>
+bool Grid_base<Cell_Type>::isolated_cell(Cell_Type* c)
 {
 	return c->north == nullptr && c->south == nullptr && c->west == nullptr && c->east == nullptr;
 }
 
-std::ostream & operator<<(std::ostream &os, Grid& g)
+template<typename Cell_Type>
+std::ostream & operator<<(std::ostream &os, Grid_base<Cell_Type>& g)
 {
 	os << "+";
 	for (int i = 0; i < g.columns; i++)
@@ -49,16 +60,17 @@ std::ostream & operator<<(std::ostream &os, Grid& g)
 	}
 	return os;
 }
-	
-std::vector<std::vector<Cell>> Grid::prepare_grid()
+
+template<typename Cell_Type>
+std::vector<std::vector<Cell_Type>> Grid_base<Cell_Type>::prepare_grid()
 {
-	std::vector<std::vector<Cell>> v({});
+	std::vector<std::vector<Cell_Type>> v({});
 	for (int i = 0; i < rows; i++)
 	{
-		std::vector<Cell> vv({});
+		std::vector<Cell_Type> vv({});
 		for (int j = 0; j < columns; j++)
 		{
-			Cell c(i, j);
+			Cell_Type c(i, j);
 			vv.push_back(c);
 
 		}
@@ -69,7 +81,8 @@ std::vector<std::vector<Cell>> Grid::prepare_grid()
 }
 
 
-void Grid::configure_cells()
+template<typename Cell_Type>
+void Grid_base<Cell_Type>::configure_cells()
 {
 	for (auto itr = grid.begin(); itr != grid.end(); itr++)
 	{
@@ -85,7 +98,8 @@ void Grid::configure_cells()
 	}
 }
 
-Cell* Grid::at(int row, int column)
+template<typename Cell_Type>
+Cell_Type* Grid_base<Cell_Type>::at(int row, int column)
 {
 	if (row < 0 || row >= rows)
 		return nullptr;
@@ -95,7 +109,8 @@ Cell* Grid::at(int row, int column)
 }
 
 
-Cell* Grid::random_cell()
+template<typename Cell_Type>
+Cell_Type* Grid_base<Cell_Type>::random_cell()
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -104,9 +119,10 @@ Cell* Grid::random_cell()
 }
 
 
-std::vector<Cell *> Grid::deadends()
+template<typename Cell_Type>
+std::vector<Cell_Type *> Grid_base<Cell_Type>::deadends()
 {
-	std::vector<Cell *> l({});
+	std::vector<Cell_Type *> l({});
 	for (auto itr = grid.begin(); itr != grid.end(); itr++)
 	{
 		for (auto itc = itr->begin(); itc != itr->end(); itc++)
@@ -120,7 +136,8 @@ std::vector<Cell *> Grid::deadends()
 	return l;
 }
 
-void Grid::to_img(int cell_size, std::string file_name)
+template<typename Cell_Type>
+void Grid_base<Cell_Type>::to_img(int cell_size, std::string file_name)
 {
 	int img_width = cell_size * columns;
 	int img_height = cell_size * rows;
