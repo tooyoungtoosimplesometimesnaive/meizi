@@ -7,17 +7,19 @@
 #include <vector>
 #include <stack>
 
+template<typename Grid_Type>
 class recursive_back_tracker {
 public:
-	void on(Grid& g)
+	void on(Grid_Type& g)
 	{
-		Cell * start_at = g.random_cell();
-		std::stack<Cell*> s;
+		auto * start_at = g.random_cell();
+		std::stack<decltype(start_at)> s;
+
 		s.push(start_at);
 		while (!s.empty())
 		{
-			Cell * current = s.top();
-			std::vector<Cell*> neighbors({});
+			auto * current = s.top();
+			std::vector<decltype(start_at)> neighbors({});
 			auto n = current->neighbors();
 
 			for (auto it = n.begin(); it != n.end(); ++it)

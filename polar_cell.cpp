@@ -1,7 +1,7 @@
 #include <vector>
 #include "polar_cell.h"
 
-std::vector<Polar_cell*> neighbors()
+std::vector<Polar_cell*> Polar_cell::neighbors()
 {
 	std::vector<Polar_cell*> list ({});
 	if (cw)
