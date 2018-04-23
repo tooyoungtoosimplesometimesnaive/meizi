@@ -14,6 +14,7 @@
 #include "rand.h"
 #include "cell.h"
 #include "polar_cell.h"
+#include "hex_cell.h"
 
 template<typename Cell_Type>
 class Grid_base;
@@ -352,6 +353,36 @@ void Grid_base<Polar_cell>::to_img(int cell_size, std::string file_name)
 	cv::circle(Im, cv::Point(center, center), rows * cell_size, wall);
 	
 	cv::imwrite(file_name, Im);
+}
+
+template <>
+void Grid_base<Hex_cell>::configure_cells()
+{
+	for (auto itr = grid.begin(); itr != grid.end(); itr++)
+	{
+		for (auto itc = itr->begin(); itc != itr->end(); itc++)
+		{
+			int row = itc->row;
+			int col = itc->col;
+
+			int north_diagonal, south_diagonal;
+
+			if (col % 2 == 0) {
+				north_diagonal = row - 1;
+				south_diagonal = row;
+			} else {
+				north_diagonal = row;
+				south_diagonal = row + 1;
+			}
+
+			itc->northwest = at(north_diagonal, col - 1);
+			itc->nort = at(row - 1, col);
+			itc->northeast = at(north_diagonal, col + 1);
+			itc->southwest = at(south_diagonal, col - 1);
+			itc->south = at(row + 1, col);
+			itc->southeast = at(south_diagonal, col + 1);
+		}
+	}
 }
 
 using Grid = Grid_base<Cell>;

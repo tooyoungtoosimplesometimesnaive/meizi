@@ -10,5 +10,10 @@ public:
 	Hex_cell(int row, int column) : Cell(row, column) {}
 	
 	std::vector<Hex_cell*> neighbors();
+
+	Hex_cell* northeast;
+	Hex_cell* northwest;
+	Hex_cell* southeast;
+	Hex_cell* southwest;
 };
 #endif
