@@ -3,7 +3,7 @@
 #include "cell.h"
 #include "grid.h"
 #include "distance_grid.h"
-#include "binary_tree.h"
+#include "maze_algorithms/binary_tree.h"
 
 int main()
 {

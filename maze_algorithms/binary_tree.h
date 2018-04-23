@@ -1,9 +1,9 @@
 #ifndef BINARY_TREE_H
 #define BINARY_TREE_H
 
-#include "grid.h"
-#include "cell.h"
-#include "rand.h"
+#include "../grid.h"
+#include "../cell.h"
+#include "../rand.h"
 #include <vector>
 
 class binary_tree {

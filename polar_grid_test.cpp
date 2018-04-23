@@ -1,5 +1,5 @@
 #include "grid.h"
-#include "recursive_back_tracker.h"
+#include "maze_algorithms/recursive_back_tracker.h"
 
 int main()
 {
@@ -15,6 +15,9 @@ int main()
 	recursive_back_tracker<Polar_grid> rb;
 	rb.on(g);
 	g.to_img(20, "polar_test_2.png");
+
+	Polar_grid g2(16);
+	g2.to_img(20, "polar_test_3.png");
 
 	return 0;
 }

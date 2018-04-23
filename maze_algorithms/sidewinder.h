@@ -1,9 +1,9 @@
 #ifndef SIDEWINDER_H
 #define SIDEWINDER_H
 
-#include "grid.h"
-#include "cell.h"
-#include "rand.h"
+#include "../grid.h"
+#include "../cell.h"
+#include "../rand.h"
 #include <vector>
 
 class sidewinder {

@@ -1,9 +1,9 @@
 #ifndef ALDOUS_BRODER_H
 #define ALDOUS_BRODER_H
 
-#include "grid.h"
-#include "cell.h"
-#include "rand.h"
+#include "../grid.h"
+#include "../cell.h"
+#include "../rand.h"
 
 #include <vector>
 

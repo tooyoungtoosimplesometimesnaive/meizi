@@ -1,9 +1,9 @@
 #ifndef HUNT_AND_KILL_H
 #define HUNT_AND_KILL_H
 
-#include "grid.h"
-#include "cell.h"
-#include "rand.h"
+#include "../grid.h"
+#include "../cell.h"
+#include "../rand.h"
 #include <vector>
 
 class hunt_and_kill {

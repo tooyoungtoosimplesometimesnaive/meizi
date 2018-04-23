@@ -2,12 +2,12 @@
 #include <iostream>
 #include "grid.h"
 #include "cell.h"
-#include "binary_tree.h"
-#include "sidewinder.h"
-#include "aldous_broder.h"
-#include "wilsons.h"
-#include "hunt_and_kill.h"
-#include "recursive_back_tracker.h"
+#include "maze_algorithms/binary_tree.h"
+#include "maze_algorithms/sidewinder.h"
+#include "maze_algorithms/aldous_broder.h"
+#include "maze_algorithms/wilsons.h"
+#include "maze_algorithms/hunt_and_kill.h"
+#include "maze_algorithms/recursive_back_tracker.h"
 
 using namespace std;
 

@@ -1,8 +1,8 @@
 #ifndef RECURSIVE_BACK_TRACKER_H
 #define RECURSIVE_BACK_TRACKER_H
 
-#include "cell.h"
-#include "rand.h"
+#include "../cell.h"
+#include "../rand.h"
 #include <vector>
 #include <stack>
 
