@@ -4,12 +4,12 @@
 #include <vector>
 #include "cell.h"
 
-class Hex_cell : public Cell
+class Triangle_cell : public Cell
 {
 public:
-	Hex_cell(int row, int column) : Cell(row, column) {}
+	Triangle_cell(int row, int column) : Cell(row, column) {}
 	
-	std::vector<Hex_cell*> neighbors();
+	std::vector<Triangle_cell*> neighbors();
 
 	bool upright();
 
