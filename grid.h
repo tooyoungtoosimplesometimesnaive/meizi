@@ -357,7 +357,7 @@ void Grid_base<Hex_cell>::configure_cells()
 		for (auto itc = itr->begin(); itc != itr->end(); itc++)
 		{
 			int row = itc->row;
-			int col = itc->col;
+			int col = itc->column;
 
 			int north_diagonal, south_diagonal;
 
@@ -370,7 +370,7 @@ void Grid_base<Hex_cell>::configure_cells()
 			}
 
 			itc->northwest = at(north_diagonal, col - 1);
-			itc->nort = at(row - 1, col);
+			itc->north = at(row - 1, col);
 			itc->northeast = at(north_diagonal, col + 1);
 			itc->southwest = at(south_diagonal, col - 1);
 			itc->south = at(row + 1, col);
@@ -428,7 +428,7 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 					cv::line(Im, cv::Point(x1, y2), cv::Point(x2, y2), wall);
 			}
 			*/
-			double cx = size + 3 * itc->column * a_size;
+			double cx = cell_size + 3 * itc->column * a_size;
 			double cy = b_size + itc->row * height;
 			if (itc->column % 2 != 0)
 			{
@@ -437,10 +437,10 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 
 			// f/n = far/near
 			// n/s/e/w = north/south/east/west
-			int x_fw = (int)(cx - size);
+			int x_fw = (int)(cx - cell_size);
 			int x_nw = (int)(cx - a_size);
 			int x_ne = (int)(cx + a_size);
-			int x_fe = (int)(cx + size);
+			int x_fe = (int)(cx + cell_size);
 
 			int y_n = (int)(cy - b_size);
 			int y_m = (int)(cy);
@@ -458,13 +458,13 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 				if (itc->north != nullptr) {
 					cv::line(Im, cv::Point(x_nw, y_n), cv::Point(x_ne, y_n), wall);
 				}
-				if (!itc->linked(itc->northeast) {
+				if (!itc->is_linked(itc->northeast)) {
 					cv::line(Im, cv::Point(x_ne, y_n), cv::Point(x_fe, y_m), wall);
 				}
-				if (!itc->linked(itc->southeast) {
+				if (!itc->is_linked(itc->southeast)) {
 					cv::line(Im, cv::Point(x_fe, y_m), cv::Point(x_ne, y_s), wall);
 				}
-				if (!itc->linked(itc->south) {
+				if (!itc->is_linked(itc->south)) {
 					cv::line(Im, cv::Point(x_ne, y_s), cv::Point(x_nw, y_s), wall);
 				}
 			}
