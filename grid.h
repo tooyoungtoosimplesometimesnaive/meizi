@@ -404,30 +404,6 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 	{
 		for (auto itc = itr->begin(); itc != itr->end(); itc++)
 		{
-			/*
-			if (isolated_cell(&(*itc)))
-				continue;
-
-			int x1 = itc->column * cell_size;
-			int y1 = itc->row * cell_size;
-			int x2 = (itc->column + 1) * cell_size;
-			int y2 = (itc->row + 1) * cell_size;
-
-			if (m == 1)
-			{
-				cv::Scalar bg_color = background_color_for(*itc);
-				cv::rectangle(Im, cv::Point(x1, y1), cv::Point(x2, y2), bg_color, -1);
-			} else {
-				if (itc->north == nullptr)
-					cv::line(Im, cv::Point(x1, y1), cv::Point(x2, y1), wall);
-				if (itc->west == nullptr)
-					cv::line(Im, cv::Point(x1, y1), cv::Point(x1, y2), wall);
-				if (!itc->is_linked(itc->east))
-					cv::line(Im, cv::Point(x2, y1), cv::Point(x2, y2), wall);
-				if (!itc->is_linked(itc->south))
-					cv::line(Im, cv::Point(x1, y2), cv::Point(x2, y2), wall);
-			}
-			*/
 			double cx = cell_size + 3 * itc->column * a_size;
 			double cy = b_size + itc->row * height;
 			if (itc->column % 2 != 0)

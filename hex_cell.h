@@ -15,5 +15,7 @@ public:
 	Hex_cell* northwest;
 	Hex_cell* southeast;
 	Hex_cell* southwest;
+	Hex_cell* north;
+	Hex_cell* south;
 };
 #endif
