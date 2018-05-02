@@ -394,7 +394,7 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 	cv::Scalar wall(0, 0, 0);
 	cv::Scalar background(255, 255, 255);
 
-	cv::Mat Im = cv::Mat(img_width + 1, img_height + 1, CV_8UC3, background);
+	cv::Mat Im = cv::Mat(img_height + 1, img_width + 1, CV_8UC3, background);
 
 	// 1 -> background
 	// 2 -> walls
@@ -425,6 +425,15 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 			if (m == 1) {
 			}
 			else {
+				if (itc->row == 0) {
+					cv::line(Im, cv::Point(x_nw, y_n), cv::Point(x_ne, y_n), wall);
+					cv::line(Im, cv::Point(x_fw, y_m), cv::Point(x_nw, y_n), wall);
+				}
+
+				if (itc->row == rows - 1) {
+					cv::line(Im, cv::Point(x_fw, y_m), cv::Point(x_nw, y_s), wall);
+				}
+
 				if (itc->southwest != nullptr) {
 					cv::line(Im, cv::Point(x_fw, y_m), cv::Point(x_nw, y_s), wall);
 				}
