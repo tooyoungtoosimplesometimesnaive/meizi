@@ -1,3 +1,3 @@
 # Maze (Meizi)
 
-Algorithms, grids, and many more!
+Algorithms, grids, Hexagonal grids, Triangle grids, and many more!
