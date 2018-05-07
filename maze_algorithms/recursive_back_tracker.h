@@ -6,7 +6,6 @@
 #include <vector>
 #include <stack>
 
-#include <iostream>
 
 template<typename Grid_Type>
 class recursive_back_tracker {
@@ -15,7 +14,6 @@ public:
 	{
 		auto * start_at = g.random_cell();
 
-		std::cout << "start at : " << start_at->row << " " << start_at->column << std::endl;
 		std::stack<decltype(start_at)> s;
 
 		s.push(start_at);

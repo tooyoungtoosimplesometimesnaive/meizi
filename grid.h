@@ -152,13 +152,18 @@ Cell_Type* Grid_base<Cell_Type>::at(int row, int column)
 {
 	if (row < 0 || row >= rows)
 		return nullptr;
-	/*
 	if (column < 0 || column >= columns)
 		return nullptr;
-		*/
 	return &grid[row][column % grid[row].size()];
 }
 
+template<>
+Polar_cell* Grid_base<Polar_cell>::at(int row, int column)
+{
+	if (row < 0 || row >= rows)
+		return nullptr;
+	return &grid[row][column % grid[row].size()];
+}
 
 template<typename Cell_Type>
 Cell_Type* Grid_base<Cell_Type>::random_cell()
@@ -425,6 +430,7 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 			if (m == 1) {
 			}
 			else {
+				/*
 				if (itc->row == 0) {
 					cv::line(Im, cv::Point(x_nw, y_n), cv::Point(x_ne, y_n), wall);
 					cv::line(Im, cv::Point(x_fw, y_m), cv::Point(x_nw, y_n), wall);
@@ -433,14 +439,15 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 				if (itc->row == rows - 1) {
 					cv::line(Im, cv::Point(x_fw, y_m), cv::Point(x_nw, y_s), wall);
 				}
+				*/
 
-				if (itc->southwest != nullptr) {
+				if (itc->southwest == nullptr) {
 					cv::line(Im, cv::Point(x_fw, y_m), cv::Point(x_nw, y_s), wall);
 				}
-				if (itc->northwest != nullptr) {
+				if (itc->northwest == nullptr) {
 					cv::line(Im, cv::Point(x_fw, y_m), cv::Point(x_nw, y_n), wall);
 				}
-				if (itc->north != nullptr) {
+				if (itc->north == nullptr) {
 					cv::line(Im, cv::Point(x_nw, y_n), cv::Point(x_ne, y_n), wall);
 				}
 				if (!itc->is_linked(itc->northeast)) {
