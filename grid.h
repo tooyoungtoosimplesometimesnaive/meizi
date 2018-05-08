@@ -15,6 +15,7 @@
 #include "cell.h"
 #include "polar_cell.h"
 #include "hex_cell.h"
+#include "triangle_cell.h"
 
 template<typename Cell_Type>
 class Grid_base;
@@ -467,7 +468,83 @@ void Grid_base<Hex_cell>::to_img(int cell_size, std::string file_name)
 	cv::imwrite(file_name, Im);
 }
 
+template<>
+void Grid_base<Triangle_cell>::configure_cells()
+{
+	for (auto itr = grid.begin(); itr != grid.end(); itr++)
+	{
+		for (auto itc = itr->begin(); itc != itr->end(); itc++)
+		{
+			int row = itc->row;
+			int col = itc->column;
+			itc->west = at(row, col - 1);
+			itc->east = at(row, col + 1);
+
+			if (itc->upright())
+				cell->south = at(row + 1, col);
+			else
+				cell->north = at(row - 1, col);
+		}
+	}
+}
+
+template<>
+void Grid_base<Triangle_cell>::to_img(int cell_size, std::string file_name)
+{
+	double half_width = (double) cell_size / 2.0;
+	double height = (double) cell_size * std::sqrt(3.0) / 2.0;
+	double half_height = height / 2.0;
+
+	int img_width = (int) (cell_size * (columns + 1) / 2.0);
+	int img_height = (int) (height * rows);
+
+	cv::Scalar wall(0, 0, 0);
+	cv::Scalar background(255, 255, 255);
+	cv::Mat Im = cv::Mat(img_height + 1, img_width + 1, CV_8UC3, background);
+
+	// 1 -> background
+	// 2 -> walls
+	int mode[] = {1, 2};
+	for (auto m : mode) {
+	for (auto itr = grid.begin(); itr != grid.end(); itr++)
+	{
+		for (auto itc = itr->begin(); itc != itr->end(); itc++)
+		{
+			double cx = half_width + itc->column * half_width;
+			double cy = half_height + itc->row * height;
+			int west_x = (int)(cx - half_width);
+			int mid_x = (int)(cx);
+			int east_x = (int)(cx + half_width);
+			int apex_y = 0;
+			int base_y = 0;
+
+			if (itc->upright()) {
+				apex_y = (int)(cy - half_height);
+				base_y = (int)(cy + half_height);
+			} else {
+				apex_y = (int)(cy + half_height);
+				base_y = (int)(cy - half_height);
+			}
+
+			if (m == 1) {
+			}
+			else {
+				if (itc->west == nullptr)
+					cv::line(Im, cv::Point(west_x, base_y), cv::Point(mid_x, apex_y), wall);
+				if (itc->is_linked(itc->east))
+					cv::line(Im, cv::Point(east_x, base_y), cv::Point(mid_x, apex_y), wall);
+				bool no_south = itc->upright() && itc->south == nullptr;
+				bool not_linked = !itc->upright() && !itc->is_linked(itc->north);
+				if (no_south || not_linked)
+					cv::line(Im, cv::Point(east_x, base_y), cv::Point(west_x, base_y), wall);
+			}
+		}
+	}
+	}
+
+}
 using Grid = Grid_base<Cell>;
 using Polar_grid = Grid_base<Polar_cell>;
 using Hex_grid = Grid_base<Hex_cell>;
+using Triangle_grid = Grid_base<Triangle_cell>;
 #endif
