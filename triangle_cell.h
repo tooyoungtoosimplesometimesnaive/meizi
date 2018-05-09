@@ -12,6 +12,9 @@ public:
 	std::vector<Triangle_cell*> neighbors();
 
 	bool upright();
-
+	Triangle_cell * north;
+	Triangle_cell * south;
+	Triangle_cell * east;
+	Triangle_cell * west;
 };
 #endif

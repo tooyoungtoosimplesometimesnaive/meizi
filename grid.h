@@ -481,9 +481,9 @@ void Grid_base<Triangle_cell>::configure_cells()
 			itc->east = at(row, col + 1);
 
 			if (itc->upright())
-				cell->south = at(row + 1, col);
+				itc->south = at(row + 1, col);
 			else
-				cell->north = at(row - 1, col);
+				itc->north = at(row - 1, col);
 		}
 	}
 }
@@ -531,7 +531,7 @@ void Grid_base<Triangle_cell>::to_img(int cell_size, std::string file_name)
 			else {
 				if (itc->west == nullptr)
 					cv::line(Im, cv::Point(west_x, base_y), cv::Point(mid_x, apex_y), wall);
-				if (itc->is_linked(itc->east))
+				if (!itc->is_linked(itc->east))
 					cv::line(Im, cv::Point(east_x, base_y), cv::Point(mid_x, apex_y), wall);
 				bool no_south = itc->upright() && itc->south == nullptr;
 				bool not_linked = !itc->upright() && !itc->is_linked(itc->north);
@@ -541,6 +541,7 @@ void Grid_base<Triangle_cell>::to_img(int cell_size, std::string file_name)
 		}
 	}
 	}
+	cv::imwrite(file_name, Im);
 
 }
 using Grid = Grid_base<Cell>;
