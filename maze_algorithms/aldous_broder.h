@@ -7,16 +7,17 @@
 
 #include <vector>
 
+template<typename Grid_Type>
 class aldous_broder {
 public:
-	void on(Grid& g)
+	void on(Grid_Type& g)
 	{
-		Cell* cell = g.random_cell();
+		auto* cell = g.random_cell();
 		int unvisited = g.rows * g.columns - 1;
 		while (unvisited > 0)
 		{
 			auto neighbors = cell->neighbors();
-			Cell * neighbor = neighbors[random(0, neighbors.size() - 1)];
+			auto * neighbor = neighbors[random(0, neighbors.size() - 1)];
 
 			if (neighbor->links.empty())
 			{
@@ -28,3 +29,4 @@ public:
 	}
 };
 #endif
+

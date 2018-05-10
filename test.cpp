@@ -31,7 +31,7 @@ int main()
 	// g2.to_img(40);
 
 	Grid g3(8, 8);
-	aldous_broder ab;
+	aldous_broder<Grid> ab;
 	ab.on(g3);
 
 	cout << g3 << endl;
@@ -52,7 +52,7 @@ int main()
 	cout << g5.deadends().size() << " deadends." << endl;
 
 	Grid g6(8, 8);
-	recursive_back_tracker rbt;
+	recursive_back_tracker<Grid> rbt;
 	rbt.on(g6);
 
 	cout << g6 << endl;
