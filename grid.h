@@ -10,6 +10,7 @@
 #include <string>
 #include <random>
 #include <ostream>
+#include <fstream>
 #include <cmath>
 #include "rand.h"
 #include "cell.h"
@@ -37,6 +38,7 @@ public:
 
 	int size() { return rows * columns; }
 	void to_img(int cell_size = 10, std::string file_name = "maze.png");
+	void to_svg(int cell_size = 10, std::string file_name = "maze.html");
 	std::vector<Cell_Type *> deadends();
 	virtual std::string contents_of(Cell_Type cell);
 	virtual cv::Scalar background_color_for(Cell_Type cell);
@@ -543,6 +545,76 @@ void Grid_base<Triangle_cell>::to_img(int cell_size, std::string file_name)
 	}
 	cv::imwrite(file_name, Im);
 
+}
+
+template<>
+void Grid_base<Triangle_cell>::to_svg(int cell_size, std::string file_name)
+{
+	double half_width = (double) cell_size / 2.0;
+	double height = (double) cell_size * std::sqrt(3.0) / 2.0;
+	double half_height = height / 2.0;
+
+	int img_width = (int) (cell_size * (columns + 1) / 2.0);
+	int img_height = (int) (height * rows);
+
+	std::string html_begin = "<html>";
+	std::string html_close = "</html>";
+	std::string body_begin = "<body>";
+	std::string body_close = "</body>";
+	std::ofstream out;
+	out.open(file_name);
+	out << html_begin << std::endl;
+	out << body_begin << std::endl;
+	out << "<svg width=\"" << img_width << "px\" height=\"" <<  img_height + 1 <<  "px\"" <<
+		" viewBox=\"0 0 " << img_width + 1 <<  " " <<  img_height + 1 << "\">" << std::endl;
+	std::string svg_close = "</svg>";
+	out <<  "<g fill=\"none\" stroke=\"#000\" stroke-width=\"2\">" << std::endl;
+	std::string g_close = "</g>";
+
+	// 1 -> background
+	// 2 -> walls
+	int mode[] = {1, 2};
+	for (auto m : mode) {
+	for (auto itr = grid.begin(); itr != grid.end(); itr++)
+	{
+		for (auto itc = itr->begin(); itc != itr->end(); itc++)
+		{
+			double cx = half_width + itc->column * half_width;
+			double cy = half_height + itc->row * height;
+			int west_x = (int)(cx - half_width);
+			int mid_x = (int)(cx);
+			int east_x = (int)(cx + half_width);
+			int apex_y = 0;
+			int base_y = 0;
+
+			if (itc->upright()) {
+				apex_y = (int)(cy - half_height);
+				base_y = (int)(cy + half_height);
+			} else {
+				apex_y = (int)(cy + half_height);
+				base_y = (int)(cy - half_height);
+			}
+
+			if (m == 1) {
+			}
+			else {
+				if (itc->west == nullptr)
+					out << "<path d=\"M" << west_x << " " << base_y << " L " << mid_x << " " << apex_y << "\" />" << std::endl;
+				if (!itc->is_linked(itc->east))
+					out << "<path d=\"M" << east_x << " " << base_y << " L " << mid_x << " " << apex_y << "\" />" << std::endl;
+				bool no_south = itc->upright() && itc->south == nullptr;
+				bool not_linked = !itc->upright() && !itc->is_linked(itc->north);
+				if (no_south || not_linked)
+					out << "<path d=\"M" << east_x << " " << base_y << " L " << west_x << " " << base_y << "\" />" << std::endl;
+			}
+		}
+	}
+	}
+	out << g_close << std::endl;
+	out << svg_close << std::endl;
+	out << body_close << std::endl;
+	out << html_close << std::endl;
+	out.close();
 }
 using Grid = Grid_base<Cell>;
 using Polar_grid = Grid_base<Polar_cell>;

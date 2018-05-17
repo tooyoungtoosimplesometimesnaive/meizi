@@ -7,6 +7,7 @@ int main()
 	recursive_back_tracker<Triangle_grid> rb;
 	rb.on(g);
 	g.to_img(20, "triangle_grid.png");
+	g.to_svg(20, "triangle_grid_svg.html");
 
 	return 0;
 }
