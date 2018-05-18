@@ -565,8 +565,8 @@ void Grid_base<Triangle_cell>::to_svg(int cell_size, std::string file_name)
 	out.open(file_name);
 	out << html_begin << std::endl;
 	out << body_begin << std::endl;
-	out << "<svg width=\"" << img_width << "px\" height=\"" <<  img_height + 1 <<  "px\"" <<
-		" viewBox=\"0 0 " << img_width + 1 <<  " " <<  img_height + 1 << "\">" << std::endl;
+	out << "<svg width=\"" << img_width + 1 << "px\" height=\"" <<  img_height + 1 <<  "px\"" <<
+		" viewBox=\"-2 -2 " << img_width + 3 <<  " " <<  img_height + 3 << "\">" << std::endl;
 	std::string svg_close = "</svg>";
 	out <<  "<g fill=\"none\" stroke=\"#000\" stroke-width=\"2\">" << std::endl;
 	std::string g_close = "</g>";
@@ -599,13 +599,13 @@ void Grid_base<Triangle_cell>::to_svg(int cell_size, std::string file_name)
 			}
 			else {
 				if (itc->west == nullptr)
-					out << "<path d=\"M" << west_x << " " << base_y << " L " << mid_x << " " << apex_y << "\" />" << std::endl;
+					out << "<line stroke-linecap=\"round\" x1=\"" << west_x << "\" y1=\"" << base_y << "\" x2=\"" << mid_x << "\" y2=\"" << apex_y << "\" />" << std::endl;
 				if (!itc->is_linked(itc->east))
-					out << "<path d=\"M" << east_x << " " << base_y << " L " << mid_x << " " << apex_y << "\" />" << std::endl;
+					out << "<line stroke-linecap=\"round\" x1=\"" << east_x << "\" y1=\"" << base_y << "\" x2=\"" << mid_x << "\" y2=\"" << apex_y << "\" />" << std::endl;
 				bool no_south = itc->upright() && itc->south == nullptr;
 				bool not_linked = !itc->upright() && !itc->is_linked(itc->north);
 				if (no_south || not_linked)
-					out << "<path d=\"M" << east_x << " " << base_y << " L " << west_x << " " << base_y << "\" />" << std::endl;
+					out << "<line stroke-linecap=\"round\" x1=\"" << east_x << "\" y1=\"" << base_y << "\" x2=\"" << west_x << "\" y2=\"" << base_y << "\" />" << std::endl;
 			}
 		}
 	}
