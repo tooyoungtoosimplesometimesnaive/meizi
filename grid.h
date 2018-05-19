@@ -18,6 +18,11 @@
 #include "hex_cell.h"
 #include "triangle_cell.h"
 
+std::string html_begin = "<html>";
+std::string html_close = "</html>";
+std::string body_begin = "<body>";
+std::string body_close = "</body>";
+
 template<typename Cell_Type>
 class Grid_base;
 
@@ -240,6 +245,65 @@ void Grid_base<Cell_Type>::to_img(int cell_size, std::string file_name)
 	}
 	
 	cv::imwrite(file_name, Im);
+}
+
+template<typename Cell_Type>
+void Grid_base<Cell_Type>::to_svg(int cell_size, std::string file_name)
+{
+	int img_width = cell_size * columns;
+	int img_height = cell_size * rows;
+
+	std::ofstream out;
+	out.open(file_name);
+	out << html_begin << std::endl;
+	out << body_begin << std::endl;
+	out << "<svg width=\"" << img_width + 1 << "px\" height=\"" <<  img_height + 1 <<  "px\"" <<
+		" viewBox=\"-2 -2 " << img_width + 3 <<  " " <<  img_height + 3 << "\">" << std::endl;
+	std::string svg_close = "</svg>";
+	out <<  "<g fill=\"none\" stroke=\"#000\" stroke-width=\"2\">" << std::endl;
+	std::string g_close = "</g>";
+
+	// 1 -> background
+	// 2 -> walls
+	int mode[] = {1, 2};
+	for (auto m : mode) {
+	for (auto itr = grid.begin(); itr != grid.end(); itr++)
+	{
+		for (auto itc = itr->begin(); itc != itr->end(); itc++)
+		{
+			if (isolated_cell(&(*itc)))
+				continue;
+
+			int x1 = itc->column * cell_size;
+			int y1 = itc->row * cell_size;
+			int x2 = (itc->column + 1) * cell_size;
+			int y2 = (itc->row + 1) * cell_size;
+
+			if (m == 1)
+			{
+				/*
+				cv::Scalar bg_color = background_color_for(*itc);
+				cv::rectangle(Im, cv::Point(x1, y1), cv::Point(x2, y2), bg_color, -1);
+				*/
+			} else {
+				if (itc->north == nullptr)
+					out << "<line stroke-linecap=\"round\" x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\"" << y1 << "\" />" << std::endl;
+				if (itc->west == nullptr)
+					out << "<line stroke-linecap=\"round\" x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x1 << "\" y2=\"" << y2 << "\" />" << std::endl;
+				if (!itc->is_linked(itc->east))
+					out << "<line stroke-linecap=\"round\" x1=\"" << x2 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\"" << y2 << "\" />" << std::endl;
+				if (!itc->is_linked(itc->south))
+					out << "<line stroke-linecap=\"round\" x1=\"" << x1 << "\" y1=\"" << y2 << "\" x2=\"" << x2 << "\" y2=\"" << y2 << "\" />" << std::endl;
+			}
+		}
+	}
+	}
+	
+	out << g_close << std::endl;
+	out << svg_close << std::endl;
+	out << body_close << std::endl;
+	out << html_close << std::endl;
+	out.close();
 }
 
 template <>
@@ -557,10 +621,6 @@ void Grid_base<Triangle_cell>::to_svg(int cell_size, std::string file_name)
 	int img_width = (int) (cell_size * (columns + 1) / 2.0);
 	int img_height = (int) (height * rows);
 
-	std::string html_begin = "<html>";
-	std::string html_close = "</html>";
-	std::string body_begin = "<body>";
-	std::string body_close = "</body>";
 	std::ofstream out;
 	out.open(file_name);
 	out << html_begin << std::endl;

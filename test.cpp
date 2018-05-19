@@ -28,7 +28,7 @@ int main()
 
 	cout << g2 << endl;
 	cout << g2.deadends().size() << " deadends." << endl;
-	// g2.to_img(40);
+	g2.to_svg(40, "rectangular_grid.html");
 
 	Grid g3(8, 8);
 	aldous_broder<Grid> ab;
