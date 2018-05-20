@@ -45,6 +45,7 @@ public:
 	void to_img(int cell_size = 10, std::string file_name = "maze.png");
 	void to_svg(int cell_size = 10, std::string file_name = "maze.html");
 	std::vector<Cell_Type *> deadends();
+	void braid(double p = 1.0);
 	virtual std::string contents_of(Cell_Type cell);
 	virtual cv::Scalar background_color_for(Cell_Type cell);
 
@@ -200,6 +201,11 @@ std::vector<Cell_Type *> Grid_base<Cell_Type>::deadends()
 	return l;
 }
 
+template<typename Cell_Type>
+void Grid_base<Cell_Type>::braid(double p = 1.0)
+{
+
+}
 template<typename Cell_Type>
 void Grid_base<Cell_Type>::to_img(int cell_size, std::string file_name)
 {
