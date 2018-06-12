@@ -1,4 +1,5 @@
 use std::fmt;
+use std::env;
 
 #[derive(Debug)]
 struct Cell {
@@ -19,6 +20,9 @@ struct Grid {
 }
 
 fn main() {
+    let args: Vec<String> = env::args().collect();
+    println!("{:?}", args);
+
     let mut v = 1;
     let mut _grid = vec![];
     for r in 1..10 {
